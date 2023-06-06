@@ -1,25 +1,12 @@
-// so far it works with 3x3 tables, but not with bigger ones
 
 function snail(arrays) {
   let nums = {};
-  let counter = 1;
   let newArr = [];
   let posObj = {};
 
   let cols = arrays[0].length;
   let rows = arrays.length;
   let el = cols * rows;
-  
-  for (let arr of arrays) {
-    for (let num of arr) {
-      nums[`Number${counter}`] = {
-        "x": arr.indexOf(num) + 1,
-        "y": arrays.indexOf(arr) + 1,
-        "value": num
-      }
-      counter++;
-    }
-  }
 
   let stepCounter = 0;
   let posCounter = 1;
@@ -30,7 +17,7 @@ function snail(arrays) {
         posObj[`Position${posCounter}`] = {
           "x": x,
           "y": 1 + stepCounter,
-          value: 0
+          value: arrays[stepCounter][x-1],
         };
         posCounter++;
       }
@@ -41,7 +28,7 @@ function snail(arrays) {
         posObj[`Position${posCounter}`] = {
           "x": cols - stepCounter,
           "y": y,
-          value: 0
+          value: arrays[y-1][cols-stepCounter-1],
         };
         posCounter++;
       }
@@ -52,7 +39,7 @@ function snail(arrays) {
         posObj[`Position${posCounter}`] = {
           "x": x,
           "y": rows - stepCounter,
-          value: 0
+          value: arrays[rows-stepCounter-1][x-1],
         };
         posCounter++;
       }
@@ -63,11 +50,11 @@ function snail(arrays) {
         posObj[`Position${posCounter}`] = {
           "x": 1 + stepCounter,
           "y": y,
-          value: 0
+          value: arrays[y-1][stepCounter],
         };
         posCounter++;
-        stepCounter++;
       }
+      stepCounter++;
     }
   }
 
@@ -79,9 +66,6 @@ function snail(arrays) {
     }
     newArr.push(posObj[`Position${i}`]["value"])
   }
-  console.log(nums);
-  console.log(posObj);
-  console.log(newArr);
   return newArr;
 }
 
